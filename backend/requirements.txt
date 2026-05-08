@@ -1,0 +1,24 @@
+# FastAPI & Server
+fastapi==0.115.12
+uvicorn[standard]==0.34.3
+python-multipart==0.0.20
+
+# Database
+sqlalchemy==2.0.41
+
+# AI/ML - LLM Providers
+groq==1.2.0
+google-genai==1.75.0
+
+# Vector DB
+chromadb==1.0.10
+
+# PDF Processing
+PyMuPDF==1.25.5
+
+# Utilities
+python-dotenv==1.1.0
+pydantic==2.13.4
+pydantic-settings==2.9.1
+rich==15.0.0
+reportlab==4.5.0
