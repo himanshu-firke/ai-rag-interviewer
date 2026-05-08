@@ -1,0 +1,46 @@
+# ============ Environment ============
+.env
+.env.local
+
+# ============ Python ============
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+venv/
+.venv/
+*.so
+
+# ============ Database ============
+*.db
+backend/chroma_db/
+
+# ============ Node.js ============
+node_modules/
+.next/
+out/
+.turbo/
+
+# ============ IDE ============
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ============ OS ============
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ============ Jupyter ============
+.ipynb_checkpoints/
+notebooks/
+
+# ============ Misc ============
+*.log
+.gemini/
+AGENTS.md
+CLAUDE.md
