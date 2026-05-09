@@ -51,67 +51,109 @@ An intelligent interview screening platform that uses **Retrieval-Augmented Gene
 
 ## 🏗 System Architecture
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      FRONTEND (Next.js)                     │
-│  ┌──────────┐ ┌──────────┐ ┌───────────┐ ┌──────────────┐  │
-│  │  Login/  │ │  Upload  │ │ Interview │ │   Results/   │  │
-│  │  Signup  │ │  Resume  │ │   Flow    │ │   History    │  │
-│  └────┬─────┘ └────┬─────┘ └─────┬─────┘ └──────┬───────┘  │
-│       └─────────────┴─────────────┴──────────────┘          │
-│                         │ REST API + JWT                    │
-└─────────────────────────┼───────────────────────────────────┘
-                          │
-┌─────────────────────────┼───────────────────────────────────┐
-│                    BACKEND (FastAPI)                         │
-│  ┌─────────────────┐  ┌─────────────────┐                   │
-│  │   Auth Router   │  │ Session Router  │                   │
-│  │  /api/auth/*    │  │ /api/session/*  │                   │
-│  └─────────────────┘  └─────────────────┘                   │
-│  ┌─────────────────┐  ┌─────────────────┐                   │
-│  │Interview Router │  │ Report Router   │                   │
-│  │/api/interview/* │  │  /api/report/*  │                   │
-│  └────────┬────────┘  └────────┬────────┘                   │
-│           │                    │                            │
-│  ┌────────┴────────────────────┴────────┐                   │
-│  │          SERVICE LAYER               │                   │
-│  │  ┌──────────────┐ ┌──────────────┐   │                   │
-│  │  │Resume Parser │ │Question Gen  │   │                   │
-│  │  └──────────────┘ └──────────────┘   │                   │
-│  │  ┌──────────────┐ ┌──────────────┐   │                   │
-│  │  │Answer Eval   │ │ RAG Pipeline │   │                   │
-│  │  └──────────────┘ └──────┬───────┘   │                   │
-│  └──────────────────────────┼───────────┘                   │
-│                             │                               │
-│  ┌──────────────────────────┼───────────┐                   │
-│  │        RAG CORE          │           │                   │
-│  │  ┌──────────┐ ┌─────────┴────────┐  │                   │
-│  │  │ Chunker  │ │  Vector Store    │  │                   │
-│  │  └──────────┘ │  (ChromaDB)      │  │                   │
-│  │  ┌──────────┐ └──────────────────┘  │                   │
-│  │  │Embedding │ ┌──────────────────┐  │                   │
-│  │  │(Gemini)  │ │   Retriever      │  │                   │
-│  │  └──────────┘ └──────────────────┘  │                   │
-│  └──────────────────────────────────────┘                   │
-│                                                             │
-│  ┌──────────────────────────────────────┐                   │
-│  │     SQLite Database (interview.db)   │                   │
-│  │  users │ candidates │ sessions │ QA  │                   │
-│  └──────────────────────────────────────┘                   │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Frontend["🌐 Frontend (Next.js)"]
+        LP["Landing Page"]
+        AUTH["Login / Signup"]
+        UP["Resume Upload"]
+        INT["Interview Flow"]
+        RES["Results & PDF Export"]
+        HIST["Interview History"]
+    end
+
+    subgraph API["🔌 REST API Layer (JWT Authenticated)"]
+        AR["/api/auth/*"]
+        SR["/api/session/*"]
+        IR["/api/interview/*"]
+        RR["/api/report/*"]
+    end
+
+    subgraph Services["⚙️ Service Layer"]
+        RP["Resume Parser<br/>(PyPDF2 + LLM)"]
+        QG["Question Generator<br/>(7 types, adaptive)"]
+        AE["Answer Evaluator<br/>(multi-dimensional scoring)"]
+        RAGP["RAG Pipeline<br/>(query + retrieve + context)"]
+    end
+
+    subgraph RAG["🧠 RAG Core"]
+        CHK["Chunker<br/>(1000 chars, 200 overlap)"]
+        EMB["Embedding Engine<br/>(Gemini text-embedding-004)"]
+        VS["Vector Store<br/>(ChromaDB)"]
+        RET["Retriever<br/>(Top-K similarity search)"]
+    end
+
+    subgraph LLM["🤖 LLM Providers"]
+        GROQ["Groq<br/>(Llama 3.3 70B)"]
+        GEM["Gemini<br/>(2.0 Flash)"]
+    end
+
+    subgraph DB["🗄️ SQLite Database"]
+        USR["users"]
+        CAND["candidates"]
+        SESS["interview_sessions"]
+        QA["question_answers"]
+        RPT["session_reports"]
+    end
+
+    subgraph KN["📚 Knowledge Base"]
+        PDF["ML Textbook PDFs"]
+    end
+
+    Frontend -->|"REST + JWT"| API
+    AR --> Services
+    SR --> Services
+    IR --> Services
+    RR --> Services
+
+    RP --> DB
+    QG --> RAGP
+    AE --> LLM
+    RAGP --> RAG
+
+    QG --> LLM
+    
+    CHK --> EMB --> VS
+    RET --> VS
+    KN --> CHK
+
+    Services --> DB
+
+    style Frontend fill:#e8f4fd,stroke:#0055ff,stroke-width:2px,color:#0b0f19
+    style API fill:#f0f4f8,stroke:#334155,stroke-width:2px,color:#0b0f19
+    style Services fill:#fef3c7,stroke:#b45309,stroke-width:2px,color:#0b0f19
+    style RAG fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#0b0f19
+    style LLM fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#0b0f19
+    style DB fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#0b0f19
+    style KN fill:#f1f5f9,stroke:#64748b,stroke-width:2px,color:#0b0f19
 ```
 
 ### Data Flow
-```
-Resume Upload → PDF Parse → Skills Extraction
-                                    ↓
-Role Selection → Query Construction → ChromaDB Retrieval
-                                    ↓
-Retrieved Context + Candidate Profile → LLM → Question Generated
-                                    ↓
-Candidate Answer → LLM Evaluation → Scores + Feedback → DB Storage
-                                    ↓
-All Questions Done → Summary Report → PDF/JSON Export
+
+```mermaid
+graph LR
+    A["📄 Resume Upload"] --> B["PDF Parse"]
+    B --> C["Skills Extraction"]
+    C --> D["Query Construction"]
+    D --> E["ChromaDB Retrieval"]
+    E --> F["Context + Profile"]
+    F --> G["🤖 LLM"]
+    G --> H["Question Generated"]
+    H --> I["Candidate Answers"]
+    I --> J["🤖 LLM Evaluation"]
+    J --> K["Scores + Feedback"]
+    K --> L["💾 DB Storage"]
+    L --> M{"All Done?"}
+    M -->|No| F
+    M -->|Yes| N["📊 Summary Report"]
+    N --> O["PDF / JSON Export"]
+
+    style A fill:#e8f4fd,stroke:#0055ff
+    style G fill:#ede9fe,stroke:#7c3aed
+    style J fill:#ede9fe,stroke:#7c3aed
+    style L fill:#fee2e2,stroke:#dc2626
+    style N fill:#d1fae5,stroke:#059669
+    style O fill:#d1fae5,stroke:#059669
 ```
 
 ---
@@ -140,8 +182,8 @@ All Questions Done → Summary Report → PDF/JSON Export
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/ai-interview-screener.git
-cd ai-interview-screener
+git clone https://github.com/himanshu-firke/ai-rag-interviewer.git
+cd ai-rag-interviewer
 ```
 
 ### 2. Backend Setup
