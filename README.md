@@ -12,6 +12,7 @@ An intelligent interview screening platform that uses **Retrieval-Augmented Gene
 
 - [Demo Video](#-demo-video)
 - [Features](#-features)
+- [Demo Video](#-demo-video)
 - [System Architecture](#-system-architecture)
 - [Tech Stack](#-tech-stack)
 - [Setup Instructions](#-setup-instructions)
