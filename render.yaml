@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: ai-interviewer-backend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker
+    envVars:
+      - key: LLM_PROVIDER
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: '["http://localhost:3000"]' # Update this after frontend deployment
+      - key: DATABASE_URL
+        value: sqlite:///./backend/interview.db
+      - key: CHROMA_PATH
+        value: ./backend/chroma_db
+      - key: KNOWLEDGE_BASE_PATH
+        value: ./knowledge
+      - key: PYTHONPATH
+        value: .
+    rootDirectory: backend
