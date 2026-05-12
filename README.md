@@ -10,6 +10,7 @@ An intelligent interview screening platform that uses **Retrieval-Augmented Gene
 
 ## 📋 Table of Contents
 
+- [Demo Video](#-demo-video)
 - [Features](#-features)
 - [System Architecture](#-system-architecture)
 - [Tech Stack](#-tech-stack)
@@ -18,6 +19,23 @@ An intelligent interview screening platform that uses **Retrieval-Augmented Gene
 - [Key Design Decisions](#-key-design-decisions)
 - [API Documentation](#-api-documentation)
 - [Database Schema](#-database-schema)
+
+---
+
+## 🎥 Demo Video
+
+Watch the comprehensive 12-minute walkthrough of the AI-Powered Candidate Screening System:
+
+**[▶️ Click here to watch the Demo Video](https://drive.google.com/file/d/1BkcxLh2XuHxGU-F06hZ0MHOfbZzHdyG0/view?usp=sharing)**
+
+### Video Walkthrough Highlights:
+- **0:00 – 1:30**: Introduction & The Problem (Standard vs. RAG-based Screening)
+- **1:30 – 4:00**: System Architecture Overview (Next.js, FastAPI, ChromaDB, RAG Core)
+- **4:00 – 6:30**: Tech Stack deep-dive
+- **6:30 – 8:00**: User Onboarding & Role Selection (Full Stack, AI/ML, etc.)
+- **8:00 – 10:30**: Resume Parsing Logic & RAG Pipeline in action (Terminal logs view)
+- **10:30 – 12:30**: Interview Interaction (Live Code Editor, Speech-to-Text, Navigation)
+- **12:30 – 14:00**: Multi-dimensional Evaluation & Final PDF Report Generation
 
 ---
 
