@@ -12,7 +12,6 @@ An intelligent interview screening platform that uses **Retrieval-Augmented Gene
 
 - [Demo Video](#-demo-video)
 - [Features](#-features)
-- [Demo Video](#-demo-video)
 - [System Architecture](#-system-architecture)
 - [Tech Stack](#-tech-stack)
 - [Setup Instructions](#-setup-instructions)
@@ -27,7 +26,7 @@ An intelligent interview screening platform that uses **Retrieval-Augmented Gene
 
 Watch the comprehensive 12-minute walkthrough of the AI-Powered Candidate Screening System:
 
-**[▶️ Click here to watch the Demo Video](https://drive.google.com/file/d/1BkcxLh2XuHxGU-F06hZ0MHOfbZzHdyG0/view?usp=sharing)**
+**[▶️ Click here to watch the Demo Video](https://drive.google.com/file/d/19-fucab8qt__UG12QbpRpL7W2bXmA9U0/view?usp=sharing)**
 
 ### Video Walkthrough Highlights:
 - **0:00 – 1:30**: Introduction & The Problem (Standard vs. RAG-based Screening)
@@ -370,4 +369,4 @@ Once the backend is running, visit **http://localhost:8000/docs** for interactiv
 
 ## 📄 License
 
-MIT License — Built for PGAGI AI/ML & Backend Intern Assignment
+MIT License — Built as a personal project
