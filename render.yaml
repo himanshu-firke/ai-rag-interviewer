@@ -10,12 +10,11 @@ services:
     name: ai-interviewer-backend
     runtime: python
     plan: free
+    region: oregon
+    branch: main
 
-    # Run from project root — all imports use "backend.*" module paths
-    rootDirectory: .
-
-    buildCommand: pip install -r backend/requirements.txt
-    startCommand: gunicorn backend.main:app -w 2 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "gunicorn backend.main:app -w 2 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT"
 
     healthCheckPath: /
 
@@ -35,20 +34,14 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: DATABASE_URL
-        value: sqlite:///./backend/interview.db
+        value: "sqlite:///./backend/interview.db"
       - key: CHROMA_PATH
-        value: ./backend/chroma_db
+        value: "./backend/chroma_db"
       - key: KNOWLEDGE_BASE_PATH
-        value: ./knowledge
+        value: "./knowledge"
       - key: CORS_ORIGINS
-        sync: false  # Set after frontend deployment: ["https://your-app.vercel.app"]
+        sync: false
       - key: PYTHON_VERSION
         value: "3.11.12"
       - key: PYTHONPATH
-        value: .
-
-    # Persistent disk to retain SQLite DB + ChromaDB between deploys
-    disk:
-      name: ai-interviewer-data
-      mountPath: /opt/render/project/src/backend
-      sizeGB: 1
+        value: "."
