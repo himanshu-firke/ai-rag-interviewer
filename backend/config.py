@@ -5,6 +5,7 @@ Uses pydantic-settings for validation and type safety.
 
 import os
 import sys
+import json
 from pathlib import Path
 
 # Fix Windows encoding for emoji/unicode in print statements
@@ -16,6 +17,7 @@ if sys.platform == "win32":
         pass
 
 from pydantic_settings import BaseSettings
+from pydantic import field_validator
 from dotenv import load_dotenv
 
 # Load .env from project root
@@ -54,8 +56,19 @@ class Settings(BaseSettings):
     CHUNK_OVERLAP: int = 200
     TOP_K_RETRIEVAL: int = 5
 
-    # Server
-    CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    # Server — accepts JSON string or empty; defaults to localhost origins
+    CORS_ORIGINS: str = '["http://localhost:3000", "http://127.0.0.1:3000"]'
+
+    @property
+    def cors_origins_list(self) -> list[str]:
+        """Parse CORS_ORIGINS JSON string into a list, with fallback."""
+        if not self.CORS_ORIGINS or not self.CORS_ORIGINS.strip():
+            return ["http://localhost:3000", "http://127.0.0.1:3000"]
+        try:
+            origins = json.loads(self.CORS_ORIGINS)
+            return origins if isinstance(origins, list) else [str(origins)]
+        except (json.JSONDecodeError, TypeError):
+            return ["http://localhost:3000", "http://127.0.0.1:3000"]
 
     # JWT Authentication
     JWT_SECRET: str = "ai-interview-secret-key-change-in-production-2024"
