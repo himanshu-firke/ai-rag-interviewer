@@ -35,5 +35,10 @@ def get_db():
 def init_db():
     """Create all tables. Called on application startup."""
     from backend import models  # noqa: F401 — import to register models
-    Base.metadata.create_all(bind=engine)
-    print("✅ Database tables created successfully.")
+    try:
+        Base.metadata.create_all(bind=engine)
+        print("✅ Database tables created successfully.")
+    except Exception as e:
+        # Tables may already exist (e.g., persistent disk or multi-worker race)
+        print(f"⚠️ Database init note: {e}")
+

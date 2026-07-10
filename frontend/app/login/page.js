@@ -43,36 +43,16 @@ export default function LoginPage() {
         <div style={{ position: "absolute", top: "-10%", left: "-10%", width: "50%", height: "50%", background: "radial-gradient(circle, rgba(0,85,255,0.15) 0%, rgba(11,15,25,0) 70%)" }}></div>
         <div style={{ position: "absolute", bottom: "-10%", right: "-10%", width: "60%", height: "60%", background: "radial-gradient(circle, rgba(0,85,255,0.1) 0%, rgba(11,15,25,0) 70%)" }}></div>
 
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <a href="/" style={{ display: "flex", alignItems: "center", gap: "10px", color: "white", textDecoration: "none", fontSize: "1.2rem", fontWeight: 700 }}>
-            <span style={{ width: 32, height: 32, background: "var(--accent-primary)", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 800 }}>AI</span>
-            InterviewAI
-          </a>
-        </div>
-
-        <div style={{ position: "relative", zIndex: 1, maxWidth: 480 }}>
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 480, marginTop: "auto", marginBottom: "auto" }}>
           <div style={{ display: "inline-block", padding: "6px 16px", borderRadius: 20, background: "rgba(255,255,255,0.1)", color: "#ffffff", fontSize: "0.8rem", fontWeight: 600, marginBottom: 24, letterSpacing: "0.05em", textTransform: "uppercase" }}>
             RAG-Powered Screening
           </div>
           <h1 style={{ fontSize: "3rem", lineHeight: 1.1, marginBottom: 24, letterSpacing: "-0.03em" }}>
             Hire the top 1% with intelligent interviewing.
           </h1>
-          <p style={{ fontSize: "1.1rem", color: "#9ca3af", lineHeight: 1.6, marginBottom: 40 }}>
+          <p style={{ fontSize: "1.1rem", color: "#9ca3af", lineHeight: 1.6 }}>
             Automate your technical screening with AI-powered role-based interviews. Generate dynamic coding challenges directly from your company's knowledge base.
           </p>
-          
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <div style={{ display: "flex" }}>
-              {[1,2,3,4].map(i => (
-                <div key={i} style={{ width: 40, height: 40, borderRadius: "50%", border: "2px solid #0b0f19", background: "#1e293b", marginLeft: i === 1 ? 0 : -12, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.7rem", color: "#9ca3af" }}>
-                  👤
-                </div>
-              ))}
-            </div>
-            <div style={{ fontSize: "0.9rem", color: "#9ca3af", fontWeight: 500 }}>
-              Join <span style={{ color: "white" }}>10,000+</span> engineering teams
-            </div>
-          </div>
         </div>
         
         <div style={{ position: "relative", zIndex: 1, color: "#4b5563", fontSize: "0.85rem" }}>
