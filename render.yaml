@@ -1,26 +1,54 @@
+# ============================================================
+# Render Blueprint — AI RAG Interviewer Backend
+# ============================================================
+# Deploy: Connect this repo to Render and it auto-detects this file.
+# Docs: https://docs.render.com/blueprint-spec
+# ============================================================
+
 services:
   - type: web
     name: ai-interviewer-backend
     runtime: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker
+    plan: free
+
+    # Run from project root — all imports use "backend.*" module paths
+    rootDirectory: .
+
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: gunicorn backend.main:app -w 2 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
+
+    healthCheckPath: /
+
     envVars:
       - key: LLM_PROVIDER
-        sync: false
+        value: groq
       - key: GROQ_API_KEY
         sync: false
+      - key: GROQ_MODEL
+        value: llama-3.3-70b-versatile
       - key: GEMINI_API_KEY
         sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.0-flash
+      - key: EMBEDDING_MODEL
+        value: text-embedding-004
       - key: JWT_SECRET
         generateValue: true
-      - key: CORS_ORIGINS
-        value: '["http://localhost:3000"]' # Update this after frontend deployment
       - key: DATABASE_URL
         value: sqlite:///./backend/interview.db
       - key: CHROMA_PATH
         value: ./backend/chroma_db
       - key: KNOWLEDGE_BASE_PATH
         value: ./knowledge
+      - key: CORS_ORIGINS
+        sync: false  # Set after frontend deployment: ["https://your-app.vercel.app"]
+      - key: PYTHON_VERSION
+        value: "3.11.12"
       - key: PYTHONPATH
         value: .
-    rootDirectory: backend
+
+    # Persistent disk to retain SQLite DB + ChromaDB between deploys
+    disk:
+      name: ai-interviewer-data
+      mountPath: /opt/render/project/src/backend
+      sizeGB: 1
