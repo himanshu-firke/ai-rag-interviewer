@@ -6,6 +6,7 @@ gunicorn==23.0.0
 
 # Database
 sqlalchemy==2.0.41
+psycopg2-binary==2.9.9
 
 # AI/ML - LLM Providers
 groq==1.2.0
