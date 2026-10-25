@@ -2,66 +2,18 @@
 
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
+import AgencyHeroSection from "@/components/ui/hero-01";
 
 export default function HomePage() {
   const { isLoggedIn } = useAuth();
 
   return (
     <>
-      {/* Hero Section */}
-      <section style={{
-        minHeight: "85vh", display: "flex", alignItems: "center",
-        background: "linear-gradient(180deg, #f8f9fc 0%, #ffffff 100%)",
-        paddingTop: 80, paddingBottom: 60,
-      }}>
-        <div className="container">
-          <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }} className="animate-fade-in">
-            <div style={{ marginBottom: 20 }}>
-              <span style={{
-                display: "inline-block", padding: "6px 16px", borderRadius: 20,
-                background: "rgba(0, 85, 255, 0.08)", color: "var(--accent-primary)",
-                fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em"
-              }}>Powered by RAG Intelligence</span>
-            </div>
-            <h1 style={{ fontSize: "4rem", lineHeight: 1.1, marginBottom: 24, color: "#0b0f19", letterSpacing: "-0.03em" }}>
-              Scale hiring with <span style={{ color: "var(--accent-primary)" }}>RAG-based</span> AI
-            </h1>
-            <p style={{
-              fontSize: "1.15rem", color: "var(--text-secondary)", lineHeight: 1.6,
-              marginBottom: 40, maxWidth: 650, margin: "0 auto 40px"
-            }}>
-              Automate your technical screening with AI-powered interviews. Generate dynamic coding challenges directly from your company's knowledge base, evaluate submissions, and make data-driven hiring decisions.
-            </p>
-            <div className="flex gap-4 justify-center">
-              <Link href={isLoggedIn ? "/upload" : "/login"} className="btn btn-primary btn-lg">
-                {isLoggedIn ? "Start Interview" : "Get Started"}
-              </Link>
-              {!isLoggedIn && (
-                <Link href="/login" className="btn btn-secondary btn-lg" style={{ background: "transparent", border: "1px solid #d1d5db" }}>
-                  Login
-                </Link>
-              )}
-            </div>
-            
-            {/* Hero Mockup Graphic */}
-            <div style={{
-              marginTop: 60, width: "100%", maxWidth: 1000, margin: "60px auto 0",
-              borderRadius: "16px", border: "1px solid #e5e7eb",
-              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
-              overflow: "hidden", position: "relative"
-            }}>
-              <img 
-                src="/images/hero-mockup.png" 
-                alt="AI Interview Interface Preview" 
-                style={{ width: "100%", height: "auto", display: "block" }} 
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Hero Section — RAG AI Interview Platform */}
+      <AgencyHeroSection />
 
       {/* How It Works */}
-      <section style={{ padding: "100px 0", background: "#f0f4f8" }}>
+      <section id="how-it-works" style={{ padding: "100px 0", background: "#f0f4f8" }}>
         <div className="container">
           <div style={{ textAlign: "center", marginBottom: 60 }}>
             <p style={{ color: "var(--accent-primary)", fontWeight: 700, fontSize: "0.85rem", marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.1em" }}>How it works</p>

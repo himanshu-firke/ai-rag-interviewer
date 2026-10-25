@@ -1,11 +1,14 @@
 "use client";
 
 import { useAuth } from "@/lib/auth-context";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function NavBar() {
   const { user, isLoggedIn, logout, loading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
+
+  if (pathname === "/") return null;
 
   const handleLogout = () => {
     logout();
